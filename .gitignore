@@ -1,0 +1,39 @@
+# Django project files
+*.log
+*.pot
+*.pyc
+__pycache__/
+*.sqlite3
+
+# IDE and editor files
+.vscode/
+.pycharm/
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Virtual environment files
+venv/
+env/
+*.egg-info/
+
+# Byte-compiled files
+__pycache__/
+
+# Media and static files
+media/
+staticfiles/
+
+# Database migration files
+migrations/.DS_Store
+
+# Other
+.env
+.secrets
+*.bak
+*.tmp
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
