@@ -1,0 +1,32 @@
+{% extends "blog/base.html" %}
+
+{% block title %}Post list{% endblock %}
+
+{% block content %}
+<p>This is a simple blog application built using Django and Bootstrap.</p>
+<h1>Blog Posts</h1>
+<ul>
+    {% for post in posts %}
+        <li>
+            <h2><a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a></h2>
+            <p>{{ post.body|truncatewords:30 }}</p>
+            <p><small>Published on {{ post.publish }} by {{ post.author }}</small></p>
+        </li>
+    {% endfor %}
+</ul>
+
+{% if is_paginated %}
+<div class="pagination">
+    {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+    {% endif %}
+    <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+    </span>
+    {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}
+
