@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 class PublishedManager(models.Manager):
     def get_queryset(self) -> models.QuerySet:
@@ -21,7 +22,7 @@ class Post(models.Model):
     
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='blog_posts')
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250)
+    slug = models.SlugField(max_length=250, unique_for_date='publish')
     body = models.TextField()
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.DRAFT)
     publish = models.DateTimeField(default=timezone.now)
@@ -42,3 +43,23 @@ class Post(models.Model):
         Returns the title of the post as a string
         """
         return self.title
+    
+    
+    def get_absolute_uri(self) -> str:
+        """
+        Returns a string representation of the generated url.
+        E.g: `blog/3`
+
+        Parameters
+        ----------
+        None
+        
+        Returns
+        -------
+        str : A string `url` representation.
+        """ 
+        return reverse('blog:post_detail', args=[self.publish.year,
+                                                self.publish.month,
+                                                self.publish.day,
+                                                self.slug])
+    
